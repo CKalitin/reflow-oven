@@ -40,6 +40,7 @@ extern "C" {
 #include "uart.h"
 #include "1602alib.h"
 #include "display.h"
+#include "fsm.h"
 
 /* USER CODE END Includes */
 
@@ -88,6 +89,8 @@ void Error_Handler(void);
 #define LED1_GPIO_Port GPIOB
 #define POWER_Pin GPIO_PIN_4
 #define POWER_GPIO_Port GPIOB
+#define HEATER_Pin GPIO_PIN_5
+#define HEATER_GPIO_Port GPIOB
 #define D0_Pin GPIO_PIN_6
 #define D0_GPIO_Port GPIOB
 #define D1_Pin GPIO_PIN_7

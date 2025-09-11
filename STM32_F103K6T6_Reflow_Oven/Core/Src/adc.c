@@ -45,7 +45,7 @@ uint32_t ADC_Val_To_Temperature(uint16_t adc_value, UART_HandleTypeDef *huart) {
   int temp_centideg = (int)(temperature * 100);
   char buf[100];
   snprintf(buf, sizeof(buf), "Adc: %d, Vout: %d mV, R_thermistor: %d ohm, Temperature: %d.%02d C\r\n", adc_value, v_out_mv, r_therm_int, temp_centideg / 100, temp_centideg % 100);
-  UART_Send_String(huart, buf);
+  //UART_Send_String(huart, buf);
 
   return (uint32_t)(temperature * 1000); // Return temperature in millidegrees Celsius
 }

@@ -106,14 +106,19 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    uint16_t adc_value = Get_Averaged_ADC_Values(hadc, 100, 1);
+    uint16_t adc_value = Get_Averaged_ADC_Values(hadc, 50, 0);
     uint32_t temperature = ADC_Val_To_Temperature(adc_value, &huart1);
 
     Display_Temperature(temperature, &huart1);
 
     Display_Voltage(adc_value * 3300 / 4095, &huart1);
 
-    HAL_Delay(1000);
+    FSM_Run(temperature);
+
+    // print temperature, adc value, and voltage, and current time to UART
+    char buf[100];
+    snprintf(buf, sizeof(buf), "%ld,%d,%d,%ld,%d,%d\r\n", temperature, adc_value, adc_value * 3300 / 4095, HAL_GetTick(), fsm_state_index, heater_currently_on);
+    UART_Send_String(&huart1, buf);
   }
   /* USER CODE END 3 */
 }
@@ -274,8 +279,8 @@ static void MX_GPIO_Init(void)
                           |D6_Pin|D7_Pin|D3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, D2_Pin|LED1_Pin|POWER_Pin|D0_Pin
-                          |D1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, D2_Pin|LED1_Pin|POWER_Pin|HEATER_Pin
+                          |D0_Pin|D1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : RS_Pin */
   GPIO_InitStruct.Pin = RS_Pin;
@@ -293,10 +298,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : D2_Pin LED1_Pin POWER_Pin D0_Pin
-                           D1_Pin */
-  GPIO_InitStruct.Pin = D2_Pin|LED1_Pin|POWER_Pin|D0_Pin
-                          |D1_Pin;
+  /*Configure GPIO pins : D2_Pin LED1_Pin POWER_Pin HEATER_Pin
+                           D0_Pin D1_Pin */
+  GPIO_InitStruct.Pin = D2_Pin|LED1_Pin|POWER_Pin|HEATER_Pin
+                          |D0_Pin|D1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
