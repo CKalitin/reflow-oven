@@ -79,7 +79,7 @@ void Error_Handler(void);
 #define D5_GPIO_Port GPIOA
 #define D6_Pin GPIO_PIN_7
 #define D6_GPIO_Port GPIOA
-#define D2_Pin GPIO_PIN_0
+#define D2_Pin GPIO_PIN_1
 #define D2_GPIO_Port GPIOB
 #define D7_Pin GPIO_PIN_9
 #define D7_GPIO_Port GPIOA
