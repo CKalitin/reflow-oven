@@ -117,7 +117,7 @@ int main(void)
 
     // print temperature, adc value, and voltage, and current time to UART
     char buf[100];
-    snprintf(buf, sizeof(buf), "%ld,%d,%d,%ld,%d,%d\r\n", temperature, adc_value, adc_value * 3300 / 4095, HAL_GetTick(), fsm_state_index, heater_currently_on);
+    snprintf(buf, sizeof(buf), "%ld,%ld,%d,%d,%ld,%d,%d\r\n", temperature, states[fsm_state_index].target_temperature_c, adc_value, adc_value * 3300 / 4095, HAL_GetTick(), fsm_state_index, heater_currently_on);
     UART_Send_String(&huart1, buf);
   }
   /* USER CODE END 3 */
