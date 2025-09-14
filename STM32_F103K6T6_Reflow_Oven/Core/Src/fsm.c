@@ -2,6 +2,9 @@
 
 uint8_t fsm_state_index = 0;
 
+uint8_t current_state_overtemperatures = 0;
+uint8_t overtemperature_count_threshold = 5;
+
 uint32_t temperature_hysteresis = 1000; // millidegrees Celsius
 
 uint32_t previous_state_start_time_ms = 0;
@@ -26,7 +29,11 @@ FSM_State states[] = {
 void FSM_Run(uint32_t temperature) {
     if (states[fsm_state_index].exit_on_temp_reached) {
         if (temperature >= states[fsm_state_index].target_temperature_c * 1000) { // Convert C to mC by *1000
-            Set_FSM_State_Index(fsm_state_index + 1);
+            current_state_overtemperatures++;
+            if (current_state_overtemperatures >= overtemperature_count_threshold) {
+                current_state_overtemperatures = 0; // Reset counter for next state
+                Set_FSM_State_Index(fsm_state_index + 1);
+            }
         }
     } else {
         int elapsed_time_ms = HAL_GetTick() - previous_state_start_time_ms;
