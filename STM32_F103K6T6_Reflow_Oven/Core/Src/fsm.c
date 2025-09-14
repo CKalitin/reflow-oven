@@ -13,17 +13,11 @@ uint8_t heater_currently_on = 0;
 
 FSM_State states[] = {
     // duration (s), target temp (C), exit on temp reached, heater enabled
-    {5, 0, 0, 0},
-    {5, 100, 0, 1},
-    {0, 100, 1, 1},
-    {20, 100, 0, 1},
-    {0, 150, 1, 1},
-    {20, 150, 0, 1},
-    {0, 200, 1, 1},
-    {20, 200, 0, 1},
+    {0, 170, 1, 1},
+    {60, 170, 0, 1},
     {0, 240, 1, 1},
     {10, 240, 0, 1},
-    {999999, 0, 0, 0}
+    {999999, 0, 0, 0},
 };
 
 void FSM_Run(uint32_t temperature) {
