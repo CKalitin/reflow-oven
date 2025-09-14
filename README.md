@@ -3,6 +3,8 @@ Custom reflow oven
 
 ![header](https://ckalitin.github.io/assets/images/made-reflow-oven/header.jpg)
 
+![header](https://github.com/CKalitin/reflow-oven/blob/master/scripts/uart_data_2025-09-14_10-09-09_real_time.png)
+
 ### Links
 
 Project Notes:  
